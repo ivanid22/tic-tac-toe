@@ -1,0 +1,19 @@
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 300px;
+  gap: 1em;
+}
+
+.grid-element {
+  background-color: lightblue;
+  display: flex;
+  font-size: 5em;
+  align-items: center;
+  justify-content: center;
+}
