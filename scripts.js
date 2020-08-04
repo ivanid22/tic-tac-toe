@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-  const board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  let board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
   const getElement = (index) => board[index];
 
@@ -7,28 +7,37 @@ const gameBoard = (() => {
     board[index] = data;
   };
 
+  const resetBoard = () => {
+    board.forEach( (element, index ) => {
+      setElement(' ', index);
+    });
+  }
+
   return {
     getElement,
     setElement,
+    resetBoard,
     board,
   };
 })();
 
 const renderBoard = () => {
   gridElements = document.querySelectorAll('.grid-element');
+  gridContainer = document.querySelector('.grid-container');
+  gridContainer.classList = "grid-container";
   gridElements.forEach((element, index) => {
     element.innerText = gameBoard.getElement(index);
     element.onclick = function () {
-      element.textContent = '#';
-      gameBoard.setElement('#', element.attributes[0].nodeValue);
-      console.log(gameBoard.getElement(element.attributes[0].nodeValue));
+      element.textContent = Game.getCurrentPlayer().getSymbol(); 
+      gameBoard.setElement(Game.getCurrentPlayer().getSymbol(), element.attributes[0].nodeValue);
       element.onclick = null;
+      Game.updateGameState();
     };
   });
 };
 
 const Player = (name1, symbol1) => {
-  const name = name1;
+  let name = name1;
   const symbol = symbol1;
   const getName = () => name;
   const getSymbol = () => symbol;
@@ -63,20 +72,24 @@ const Game = (() => {
 
   const updateGameState = () => {
     if(verify(gameBoard.board)) {
-      alert(`Player ${players[currentPlayer].getName()} has won!`);
+     console.log(`Player ${players[currentPlayer].getName()} has won!`);
+     gameBoard.resetBoard();
+     renderBoard();
     }
-    else if (gameBoard.board.every((cell) => cell === ' ' )) {
-      alert('Draw game!');
+    else if (gameBoard.board.every((cell) => cell != ' ' )) {
+     console.log('Draw game!');
+     gameBoard.resetBoard();
+     renderBoard();
     }
     else {
       currentPlayer = (currentPlayer === 0) ? 1 : 0;
-      
     }
   }
 
   return {
     getPlayer,
     getCurrentPlayer,
+    updateGameState
   };
 })();
 
@@ -89,6 +102,7 @@ function namesSubmit(e) {
     Game.getPlayer(0).setName(inputs[0].value);
     Game.getPlayer(1).setName(inputs[1].value);
     e.target.style = 'display: none;';
+    renderBoard();
   }
   else {
     alert("Names can't be empty!")
@@ -96,7 +110,7 @@ function namesSubmit(e) {
 }
 
 window.onload = () => {
-  renderBoard();
+  
   document.getElementById("players_form").addEventListener("submit", namesSubmit);
 };
 
