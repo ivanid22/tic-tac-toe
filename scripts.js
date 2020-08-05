@@ -37,38 +37,21 @@ const Player = (name1, symbol1) => {
 };
 
 const displayController = (() => {
-  const updateGameInfo = () => {
+  const updateGameInfo = (name) => {
     const gameInfo = document.querySelector('.game-info');
     gameInfo.classList = 'game-info';
-    document.querySelector('.game-info .current-player').textContent = Game.getCurrentPlayer().getName();
+    document.querySelector('.game-info .current-player').textContent = name;
   };
 
-  const renderBoard = () => {
-    const gridElements = document.querySelectorAll('.grid-element');
+  const renderBoard = (name) => {
     const gridContainer = document.querySelector('.grid-container');
     gridContainer.classList = 'grid-container';
-    updateGameInfo();
-    gridElements.forEach((element, index) => {
-      element.innerText = gameBoard.getElement(index);
-      element.onclick = function () {
-        element.textContent = Game.getCurrentPlayer().getSymbol();
-        gameBoard.setElement(Game.getCurrentPlayer().getSymbol(), element.attributes[0].nodeValue);
-        element.onclick = null;
-        Game.updateGameState();
-      };
-    });
+    updateGameInfo(name);
   };
 
-  const displayModalMessage = (title, message, reset) => {
+  const displayModalMessage = (title, message) => {
     document.querySelector('#messageModalLabel').innerText = title;
     document.querySelector('#modalBodyMessage').innerText = message;
-    if (reset) {
-      document.querySelector('#closeModalButton').onclick = function () {
-        gameBoard.resetBoard();
-        renderBoard();
-      };
-    }
-
     $('#messageModal').modal();
   };
 
@@ -90,18 +73,29 @@ const Game = (() => {
   const resetGame = () => {
     gameBoard.resetBoard();
     currentPlayer = 0;
+    const gridElements = document.querySelectorAll('.grid-element');
+    gridElements.forEach((element, index) => {
+      element.innerText = gameBoard.getElement(index);
+      element.onclick = () => {
+        element.textContent = Game.getCurrentPlayer().getSymbol();
+        gameBoard.setElement(Game.getCurrentPlayer().getSymbol(), element.attributes[0].nodeValue);
+        element.onclick = null;
+        Game.updateGameState();
+      };
+    });
   };
 
   function verify(board) {
     const winnerPositions = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
       [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+    let over = false;
 
-    for (test of winnerPositions) {
+    winnerPositions.forEach(test => {
       if (board[test[0]] === board[test[1]]
-          && board[test[0]] === board[test[2]]
-          && board[test[0]] != ' ') return true;
-    }
-    return false;
+        && board[test[0]] === board[test[2]]
+        && board[test[0]] !== ' ') over = true;
+    });
+    return over;
   }
 
   const updateGameState = () => {
@@ -112,7 +106,7 @@ const Game = (() => {
     } else {
       currentPlayer = (currentPlayer === 0) ? 1 : 0;
     }
-    displayController.updateGameInfo();
+    displayController.updateGameInfo(players[currentPlayer].getName());
   };
 
   return {
@@ -123,6 +117,11 @@ const Game = (() => {
   };
 })();
 
+function restart() {
+  Game.resetGame();
+  displayController.renderBoard(Game.getCurrentPlayer().getName());
+}
+
 function namesSubmit(e) {
   e.preventDefault();
   const inputs = document.querySelectorAll('input');
@@ -130,18 +129,17 @@ function namesSubmit(e) {
     Game.getPlayer(0).setName(inputs[0].value);
     Game.getPlayer(1).setName(inputs[1].value);
     e.target.style = 'display: none;';
-    displayController.renderBoard();
+    restart();
   } else {
     displayController.displayModalMessage('Error', "Names can't be empty", false);
   }
 }
 
-function restart() {
-  Game.resetGame();
-  displayController.renderBoard();
-}
 
 window.onload = () => {
   document.getElementById('players_form').addEventListener('submit', namesSubmit);
   document.querySelector('.restart').addEventListener('click', restart);
+  document.querySelector('#closeModalButton').onclick = () => {
+    restart();
+  };
 };
