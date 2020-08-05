@@ -35,32 +35,34 @@ const displayController = (() => {
     $("#messageModal").modal();
   }
 
+  const renderBoard = () => {
+    gridElements = document.querySelectorAll('.grid-element');
+    gridContainer = document.querySelector('.grid-container');
+    gridContainer.classList = "grid-container";
+    updateGameInfo();
+    gridElements.forEach((element, index) => {
+      element.innerText = gameBoard.getElement(index);
+      element.onclick = function () {
+        element.textContent = Game.getCurrentPlayer().getSymbol(); 
+        gameBoard.setElement(Game.getCurrentPlayer().getSymbol(), element.attributes[0].nodeValue);
+        element.onclick = null;
+        Game.updateGameState();
+      };
+    });
+  };
+
+  const updateGameInfo = () => {
+    gameInfo = document.querySelector('.game-info');
+    gameInfo.classList = "game-info";
+    document.querySelector('.game-info .current-player').textContent = Game.getCurrentPlayer().getName();
+  };
+
   return {
-    displayModalMessage
+    displayModalMessage,
+    renderBoard,
+    updateGameInfo,
   }
 })()
-
-const renderBoard = () => {
-  gridElements = document.querySelectorAll('.grid-element');
-  gridContainer = document.querySelector('.grid-container');
-  gridContainer.classList = "grid-container";
-  updateGameInfo();
-  gridElements.forEach((element, index) => {
-    element.innerText = gameBoard.getElement(index);
-    element.onclick = function () {
-      element.textContent = Game.getCurrentPlayer().getSymbol(); 
-      gameBoard.setElement(Game.getCurrentPlayer().getSymbol(), element.attributes[0].nodeValue);
-      element.onclick = null;
-      Game.updateGameState();
-    };
-  });
-};
-
-const updateGameInfo = () => {
-  gameInfo = document.querySelector('.game-info');
-  gameInfo.classList = "game-info";
-  document.querySelector('.game-info .current-player').textContent = Game.getCurrentPlayer().getName();
-}
 
 const Player = (name1, symbol1) => {
   let name = name1;
@@ -104,7 +106,7 @@ const Game = (() => {
     
     if(verify(gameBoard.board)) {
      displayController.displayModalMessage("Game over", `Player ${players[currentPlayer].getName()} has won!`, true);
-     renderBoard();
+     displayController.renderBoard();
     }
     else if (gameBoard.board.every((cell) => cell != ' ' )) {
      displayController.displayModalMessage("Game over", "Draw game!", true);
@@ -112,7 +114,7 @@ const Game = (() => {
     else {
       currentPlayer = (currentPlayer === 0) ? 1 : 0;
     }
-    updateGameInfo();
+    displayController.updateGameInfo();
   }
 
   return {
@@ -123,8 +125,6 @@ const Game = (() => {
   };
 })();
 
-
-
 function namesSubmit(e) {
   e.preventDefault();
   inputs = document.querySelectorAll('input');
@@ -132,7 +132,7 @@ function namesSubmit(e) {
     Game.getPlayer(0).setName(inputs[0].value);
     Game.getPlayer(1).setName(inputs[1].value);
     e.target.style = 'display: none;';
-    renderBoard();
+    displayController.renderBoard();
   }
   else {
     displayController.displayModalMessage("Error", "Names can't be empty", false);
@@ -141,7 +141,7 @@ function namesSubmit(e) {
 
 function restart() {
   Game.resetGame();
-  renderBoard();
+  displayController.renderBoard();
 }
 
 window.onload = () => {
