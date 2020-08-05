@@ -44,6 +44,7 @@ const renderBoard = () => {
   gridElements = document.querySelectorAll('.grid-element');
   gridContainer = document.querySelector('.grid-container');
   gridContainer.classList = "grid-container";
+  updateGameInfo();
   gridElements.forEach((element, index) => {
     element.innerText = gameBoard.getElement(index);
     element.onclick = function () {
@@ -54,6 +55,12 @@ const renderBoard = () => {
     };
   });
 };
+
+const updateGameInfo = () => {
+  gameInfo = document.querySelector('.game-info');
+  gameInfo.classList = "game-info";
+  document.querySelector('.game-info .current-player').textContent = Game.getCurrentPlayer().getName();
+}
 
 const Player = (name1, symbol1) => {
   let name = name1;
@@ -76,6 +83,10 @@ const Game = (() => {
 
   const getPlayer = (index) => players[index];
   const getCurrentPlayer = () => players[currentPlayer];
+  const resetGame = () => {
+    gameBoard.resetBoard();
+    currentPlayer = 0;
+  }
 
   function verify(board) {
     const winnerPositions = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -90,6 +101,7 @@ const Game = (() => {
   }
 
   const updateGameState = () => {
+    
     if(verify(gameBoard.board)) {
      displayController.displayModalMessage("Game over", `Player ${players[currentPlayer].getName()} has won!`, true);
      renderBoard();
@@ -100,12 +112,14 @@ const Game = (() => {
     else {
       currentPlayer = (currentPlayer === 0) ? 1 : 0;
     }
+    updateGameInfo();
   }
 
   return {
     getPlayer,
     getCurrentPlayer,
-    updateGameState
+    updateGameState,
+    resetGame
   };
 })();
 
@@ -125,7 +139,13 @@ function namesSubmit(e) {
   }
 }
 
+function restart() {
+  Game.resetGame();
+  renderBoard();
+}
+
 window.onload = () => {
   document.getElementById("players_form").addEventListener("submit", namesSubmit);
+  document.querySelector('.restart').addEventListener('click', restart);
 };
 
