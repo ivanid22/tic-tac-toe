@@ -21,6 +21,25 @@ const gameBoard = (() => {
   };
 })();
 
+const displayController = (() => {
+  const displayModalMessage = (title, message, reset) => {
+    document.querySelector("#messageModalLabel").innerText = title;
+    document.querySelector("#modalBodyMessage").innerText = message;
+    if(reset) {
+      document.querySelector("#closeModalButton").onclick = function() {
+        gameBoard.resetBoard();
+        renderBoard();
+      }
+    }
+    
+    $("#messageModal").modal();
+  }
+
+  return {
+    displayModalMessage
+  }
+})()
+
 const renderBoard = () => {
   gridElements = document.querySelectorAll('.grid-element');
   gridContainer = document.querySelector('.grid-container');
@@ -72,14 +91,11 @@ const Game = (() => {
 
   const updateGameState = () => {
     if(verify(gameBoard.board)) {
-     console.log(`Player ${players[currentPlayer].getName()} has won!`);
-     gameBoard.resetBoard();
+     displayController.displayModalMessage("Game over", `Player ${players[currentPlayer].getName()} has won!`, true);
      renderBoard();
     }
     else if (gameBoard.board.every((cell) => cell != ' ' )) {
-     console.log('Draw game!');
-     gameBoard.resetBoard();
-     renderBoard();
+     displayController.displayModalMessage("Game over", "Draw game!", true);
     }
     else {
       currentPlayer = (currentPlayer === 0) ? 1 : 0;
@@ -105,12 +121,11 @@ function namesSubmit(e) {
     renderBoard();
   }
   else {
-    alert("Names can't be empty!")
+    displayController.displayModalMessage("Error", "Names can't be empty", false);
   }
 }
 
 window.onload = () => {
-  
   document.getElementById("players_form").addEventListener("submit", namesSubmit);
 };
 
