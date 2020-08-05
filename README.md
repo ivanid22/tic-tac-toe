@@ -4,7 +4,7 @@ This is a JavaScript implementation of the popular game Tic-tac-toe on a single-
 
   ![App Preview](screenshot.png) 
   ## Liveview
-  - [Live version](https://raw.githack.com/ivanid22/tic-tac-toe/game/index.html) 
+  - [Live version](https://tic-tac-toe-frid.netlify.app/) 
   
   ## Built With
   - JavaScript (ES6)
