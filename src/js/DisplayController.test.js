@@ -35,11 +35,4 @@ describe('DisplayController', () => {
       expect(document.querySelector('.grid-container').classList).not.toContain('hidden');
     });
   });
-
-  describe('displayModalMessage', () => {
-    it('should display a modal message', () => {
-      displayController.displayModalMessage('test title', 'test message');
-      expect(document.querySelector('#messageModalLabel').innerText).toEqual('test title');
-    });
-  });
 });
