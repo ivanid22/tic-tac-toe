@@ -1,9 +1,7 @@
 import gameBoard from './GameBoard';
 
 describe('gameBoard', () => {
-  
   describe('getElement', () => {
-       
     it('should return the value saved on a selected position', () => {
       gameBoard.board[0] = 'X';
       expect(gameBoard.getElement(0)).toEqual('X');
@@ -15,7 +13,6 @@ describe('gameBoard', () => {
   });
 
   describe('setElement', () => {
-       
     it('should save the value on selected position', () => {
       gameBoard.setElement('O', 1);
       expect(gameBoard.board[1]).toEqual('O');
@@ -26,7 +23,6 @@ describe('gameBoard', () => {
         gameBoard.setElement('O', 10);
       }).toThrow();
     });
-
   });
 
   describe('resetBoard', () => {
@@ -34,7 +30,6 @@ describe('gameBoard', () => {
       const emptyBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
       gameBoard.board[0] = 'X';
       gameBoard.board[6] = 'O';
-      console.log(gameBoard.board)
       gameBoard.resetBoard();
       expect(gameBoard.board).toEqual(emptyBoard);
     });

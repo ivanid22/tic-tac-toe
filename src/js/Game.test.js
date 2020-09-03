@@ -3,12 +3,6 @@ import Game from './Game';
 const fs = require('fs');
 const path = require('path');
 
-const timer = () => {
-  setTimeout(() => {
-    
-  }, 100);
-}
-
 describe('Game', () => {
   beforeEach(() => {
     const html = fs.readFileSync(path.join(__dirname, '../../dist/index.html'), 'utf-8');
@@ -60,11 +54,5 @@ describe('Game', () => {
       Game.resetGame();
       expect(Game.getCurrentPlayer().getName()).toEqual('Player1');
     });
-
-    /*it('should reset the game board', () => {
-      const emptyBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-      Game.resetGame();
-      expect(Game.gameBoard.board).toEqual(emptyBoard);
-    });*/
   });
 });

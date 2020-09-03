@@ -1,6 +1,6 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bulma/css/bulma.css'
+import 'bulma/css/bulma.css';
 import displayController from './js/DisplayController';
 import Game from './js/Game';
 import './style.css';

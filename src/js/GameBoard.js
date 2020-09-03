@@ -1,11 +1,10 @@
 const gameBoard = (() => {
-  const emptyBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-  let board = emptyBoard;
+  const board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
   const getElement = (index) => board[index];
 
   const setElement = (data, index) => {
-    if (index >= 0 && index < board.length ) board[index] = data;
+    if (index >= 0 && index < board.length) board[index] = data;
     else throw new Error('Index out of bounds');
   };
 

@@ -20,7 +20,7 @@ const Game = (() => {
         element.textContent = Game.getCurrentPlayer().getSymbol();
         gameBoard.setElement(
           Game.getCurrentPlayer().getSymbol(),
-          element.attributes[0].nodeValue
+          element.attributes[0].nodeValue,
         );
         element.onclick = null;
         Game.updateGameState();
@@ -42,12 +42,10 @@ const Game = (() => {
     let over = false;
 
     winnerPositions.forEach((test) => {
-      if (
-        board[test[0]] === board[test[1]]
+      if (board[test[0]] === board[test[1]]
         && board[test[0]] === board[test[2]]
         && board[test[0]] !== ' '
-      )
-        over = true;
+      ) over = true;
     });
     return over;
   }
