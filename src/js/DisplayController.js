@@ -14,6 +14,7 @@ const displayController = (() => {
   const displayModalMessage = (title, message) => {
     document.querySelector('#messageModalLabel').innerText = title;
     document.querySelector('#modalBodyMessage').innerText = message;
+    // eslint-disable-next-line no-undef
     $('#messageModal').modal();
   };
 

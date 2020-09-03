@@ -1,3 +1,5 @@
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import displayController from './js/DisplayController';
 import Game from './js/Game';
 import './style.css';

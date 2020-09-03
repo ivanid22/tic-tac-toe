@@ -1,4 +1,5 @@
-import Game from './Game'
+import Game from './Game';
+
 const fs = require('fs');
 const path = require('path');
 
