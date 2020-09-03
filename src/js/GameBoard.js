@@ -5,14 +5,14 @@ const gameBoard = (() => {
   const getElement = (index) => board[index];
 
   const setElement = (data, index) => {
-    board[index] = data;
+    if (index >= 0 && index < board.length ) board[index] = data;
+    else throw new Error('Index out of bounds');
   };
 
   const resetBoard = () => {
-    /*board.forEach((element, index) => {
+    board.forEach((element, index) => {
       setElement(' ', index);
-    });*/
-    board = emptyBoard.map((element) => element);
+    });
   };
 
   return {
