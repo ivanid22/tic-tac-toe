@@ -3,9 +3,6 @@ import displayController from './DisplayController';
 const fs = require('fs');
 const path = require('path');
 
-//jest.dontMock(fs);
-//jest.dontMock(path);
-
 describe('DisplayController', () => {
   beforeEach(() => {
     const html = fs.readFileSync(path.join(__dirname, '../../dist/index.html'), 'utf-8');
@@ -40,6 +37,11 @@ describe('DisplayController', () => {
     it('should display a modal message', () => {
       displayController.displayModalMessage('test title', 'test message');
       expect(document.querySelector('#messageModalLabel').innerText).toEqual('test title');
+    });
+
+    it('should not display a message when the params are empty', () => {
+      displayController.displayModalMessage();
+      expect(document.querySelector('#messageModalLabel').innerText).toBeFalsy();
     });
   });
 });

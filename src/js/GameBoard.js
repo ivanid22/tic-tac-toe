@@ -1,5 +1,6 @@
 const gameBoard = (() => {
-  const board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  const emptyBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  let board = emptyBoard;
 
   const getElement = (index) => board[index];
 
@@ -8,9 +9,10 @@ const gameBoard = (() => {
   };
 
   const resetBoard = () => {
-    board.forEach((element, index) => {
+    /*board.forEach((element, index) => {
       setElement(' ', index);
-    });
+    });*/
+    board = emptyBoard.map((element) => element);
   };
 
   return {

@@ -53,18 +53,22 @@ const Game = (() => {
   }
 
   const updateGameState = () => {
+    let endState = 'none';
     if (verify(gameBoard.board)) {
       displayController.displayModalMessage(
         'Game over',
         `Player ${players[currentPlayer].getName()} has won!`,
-        true
+        true,
       );
+      endState = 'win';
     } else if (gameBoard.board.every((cell) => cell !== ' ')) {
       displayController.displayModalMessage('Game over', 'Draw game!', true);
+      endState = 'draw';
     } else {
       currentPlayer = currentPlayer === 0 ? 1 : 0;
     }
     displayController.updateGameInfo(players[currentPlayer].getName());
+    return endState;
   };
 
   return {
@@ -72,6 +76,7 @@ const Game = (() => {
     getCurrentPlayer,
     updateGameState,
     resetGame,
+    gameBoard,
   };
 })();
 
