@@ -7,35 +7,13 @@
   </head>
   <body>
     <div class="container">
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="messageModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="messageModalLabel">Modal title</h5>
-            </div>
-            <div class="modal-body" id="modalBodyMessage">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button
-                id="closeModalButton"
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
+      <div class="modal new-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content has-text-centered">
+          <h1 id="messageModalLabel" class="title">Title</h1>
+          <h2 id="modalBodyMessage" class="subtitle">Message</h1>
         </div>
+        <button class="modal-close is-large" aria-label="close"></button>
       </div>
       <div class="form-container">
         <form action="" id="players_form">

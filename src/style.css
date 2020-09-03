@@ -46,3 +46,10 @@ form {
 .hidden {
   display: none;
 }
+
+.new-modal {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  padding: 2em;
+}
