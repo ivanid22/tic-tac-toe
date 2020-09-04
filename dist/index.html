@@ -1,0 +1,60 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-tac-toe</title>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="modal new-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content has-text-centered">
+          <h1 id="messageModalLabel" class="title">Title</h1>
+          <h2 id="modalBodyMessage" class="subtitle">Message</h1>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+      <div class="form-container">
+        <form action="" id="players_form">
+            <div class="form-group">
+            <label for="player1_name_field">Player 1 name: </label>
+            <input
+                type="text"
+                class="form-control"
+                name="player1_name"
+                id="player1_name_field"
+            />
+            </div>
+            <div class="form-group">
+            <label for="player2_name_field">Player 2 name: </label>
+            <input
+                type="text"
+                class="form-control"
+                name="player2_name"
+                id="player2_name_field"
+            />
+            </div>
+            <input class="btn btn-primary" type="submit" value="Start game" />
+        </form>
+      </div>
+      <div class="game-info hidden">
+          <p>Current Player: <span class="current-player "></span>  </p>
+          <button class="restart btn btn-primary">Restart
+
+          </button>
+      </div>
+      <div class="grid-container hidden">
+        <div id="0" class="grid-element"></div>
+        <div id="1" class="grid-element"></div>
+        <div id="2" class="grid-element"></div>
+        <div id="3" class="grid-element"></div>
+        <div id="4" class="grid-element"></div>
+        <div id="5" class="grid-element"></div>
+        <div id="6" class="grid-element"></div>
+        <div id="7" class="grid-element"></div>
+        <div id="8" class="grid-element"></div>
+      </div>
+    </div>
+  </body>
+</html>
